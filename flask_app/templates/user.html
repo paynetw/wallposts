@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>{{user.first_name}} {{user.last_name}}</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+    <h1>{{user.first_name}} {{user.last_name}}!</h1>
+    <h2>Posts from {{user.first_name}} {{user.last_name}}</h2>
+    {% for post in user_posts  %}
+        <p>{{post.content}}</p>
+            {% if session["user_id"] == user.id %}
+                <a href="/posts/{{post.id}}/edit">Edit</a>
+                <a href="/posts/{{post.id}}/delete">Delete</a>
+            {% endif %}
+        </p>
+    {% endfor %}
+    <a href="/wall">Go Back To The Wall!</a>
+    <a href="/logout">Logout</a>
+</body>
+</html>

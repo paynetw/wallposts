@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+    <h1>Welcome {{user.first_name}} {{user.last_name}}</h1>
+    <h2>User Information:</h2>
+    <p>Email: {{user.email}}</p>
+    <p>Account was created at: {{user.created_at}}</p>
+    <a href="/wall">Go to The Wall!</a>
+    <a href="/logout">Logout</a>
+</body>
+</html>

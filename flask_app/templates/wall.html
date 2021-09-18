@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>The Wall</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+    <h1>Welcome to The Wall {{user.first_name}} {{user.last_name}}!</h1>
+    {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+    {% if messages %}                            <!-- check if there are any messages -->
+        {% for message in messages %}            <!-- loop through the messages -->
+            <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+        {% endfor %}
+    {% endif %}
+    {% endwith %}   
+    <h2>Wall Posts</h2>
+    {% for post in posts  %}
+        <p><a href="/users/{{post.poster.id}}">{{post.poster.first_name}} {{post.poster.last_name}}</a> Said: {{post.content}} Number of Likes: {{post.users_who_liked |length}}</p>
+        <p>Created at: {{post.created_at}}</p>
+        {% if post.id in posts_user_liked %} 
+            <a href="/posts/{{post.id}}/dislike">Dislike!</a>
+        {% else %} 
+            <a href="/posts/{{post.id}}/like">Like!</a>
+        {% endif %}
+        {% if user.id == post.user_id %}
+            <a href="/posts/{{post.id}}/edit">Edit</a>
+            <a href="/posts/{{post.id}}/delete">Delete</a>
+        {% endif %}
+        
+    {% endfor %}
+    <h3>Post on the Wall!</h3>
+    <form action="/users/{{user.id}}/post" method = "POST">
+        <textarea name="content" placeholder="Write your post here!"></textarea>
+        <button type="submit">Submit Post!</button>
+    </form>
+
+    <a href="/dashboard">Go to User Information Dashboard!</a>
+    <a href="/logout">Logout</a>
+</body>
+</html>
